@@ -108,7 +108,7 @@ const fetchAndAppendCommunitySbcs = async (challengeId) => {
         (value) =>
           `<option class="currency-coins" value='${value.id}'>${value.id}(${t(
             "price"
-          )} ${value.ps_price})</option>`
+          )} ${value.prices.ps})</option>`
       )}
    </select>`
   );

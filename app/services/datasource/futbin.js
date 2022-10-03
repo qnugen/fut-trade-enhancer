@@ -94,7 +94,7 @@ const getPlayerUrl = (player) => {
 };
 
 export const getAllSBCSForChallenge = async (challengeId) => {
-  const futBinUrl = `https://futbin.org/futbin/api/getStcSquads?challenge=${challengeId}`;
+  const futBinUrl = `https://futbin.org/futbin/api/getChallengeTopSquads?chal_id=${challengeId}&platform=PS`;
   return new Promise((resolve) => {
     sendExternalRequest({
       method: "GET",
@@ -105,8 +105,8 @@ export const getAllSBCSForChallenge = async (challengeId) => {
           return resolve(null);
         }
 
-        const { squads } = JSON.parse(res.response);
-        resolve(squads);
+        const { data } = JSON.parse(res.response);
+        resolve(data.sort((a, b) => b.likes - a.likes || a.prices.ps - b.prices.ps));
       },
     });
   });
