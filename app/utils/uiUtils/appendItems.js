@@ -2,7 +2,16 @@ import { idSectionPrices } from "../../app.constants";
 import { t } from "../../services/translate";
 import { generateSectionRelistBtn } from "./generateElements";
 
-export const appendPrice = (dataSource, auctionElement, price) => {
+export const appendPrice = (dataSource, auctionElement, price, maxPrice) => {
+  if (!auctionElement.find(".maxprice").length) {
+    auctionElement.prepend(`<div class="auctionValue maxprice">
+              <span class="label">MAX PRICE</span>
+              <span class="currency-coins value">${
+                maxPrice ? maxPrice.toLocaleString() : "---"
+              }</span>             
+            </div>`);
+  }  
+  
   if (!auctionElement.find(".futbinprice").length) {
     auctionElement.prepend(`<div class="auctionValue futbinprice">
               <span class="label">${dataSource}</span>

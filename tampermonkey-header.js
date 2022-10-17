@@ -2,9 +2,9 @@ module.exports = {
   headers: {
     name: "FUT Trade Enhancer",
     namespace: "http://tampermonkey.net/",
-    version: "1.3.6",
+    version: "1.3.7.6",
     description: "FUT Trade Enhancer",
-    author: "CK Algos",
+    author: "qnugen",
     match: [
       "https://www.ea.com/*/fifa/ultimate-team/web-app/*",
       "https://www.ea.com/fifa/ultimate-team/web-app/*",
@@ -20,8 +20,8 @@ module.exports = {
       "futbin.org",
     ],
     updateURL:
-      "https://github.com/ckalgos/fut-trade-enhancer/releases/latest/download/fut-trade-enhancer.user.js",
+      "https://github.com/qnugen/fut-trade-enhancer/releases/latest/download/fut-trade-enhancer.user.js",
     downloadURL:
-      "https://github.com/ckalgos/fut-trade-enhancer/releases/latest/download/fut-trade-enhancer.user.js",
+      "https://github.com/qnugen/fut-trade-enhancer/releases/latest/download/fut-trade-enhancer.user.js",
   },
 };

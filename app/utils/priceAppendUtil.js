@@ -11,6 +11,9 @@ import {
   appendSectionTotalPrices,
   appendSquadTotal,
 } from "./uiUtils/appendItems";
+import {
+  getSellBidPrice, roundOffPrice
+} from "./priceUtil";
 
 export const appendCardPrice = async (listRows, isFromPacks) => {
   const enhancerSetting = getValue("EnhancerSettings") || {};
@@ -32,6 +35,8 @@ export const appendCardPrice = async (listRows, isFromPacks) => {
     const rootElement = $(__root);
     const { definitionId, contract, _auction: auctionData } = data;
     const cardPrice = prices.get(`${definitionId}_${dataSource}_price`);
+    let maxPrice = (+enhancerSetting["idBarginThreshold"] / 100) * cardPrice;
+    maxPrice = getSellBidPrice(roundOffPrice(maxPrice));
     appendContractInfo(rootElement, contract);
     if (clubSquadIds.has(definitionId)) {
       appendDuplicateTag(rootElement);
@@ -43,11 +48,12 @@ export const appendCardPrice = async (listRows, isFromPacks) => {
       auctionElement.removeAttr("style");
       auctionElement.addClass("hideauction");
     }
+    console.log(auctionData);
     const bidPrice = auctionData.currentBid || auctionData.startingBid;
     totalBid += bidPrice;
     totalBin += auctionData.buyNowPrice;
     totalExternalPrice += cardPrice || 0;
-    appendPrice(dataSource.toUpperCase(), auctionElement, cardPrice);
+    appendPrice(dataSource.toUpperCase(), auctionElement, cardPrice, maxPrice);
     checkAndAppendBarginIndicator(
       rootElement,
       auctionData.buyNowPrice,
@@ -68,7 +74,7 @@ const checkAndAppendBarginIndicator = (
   const enhancerSetting = getValue("EnhancerSettings") || {};
   const markBidBargain = enhancerSetting["idBidBargain"];
   futBinPrice =
-    futBinPrice * ((enhancerSetting["idBarginThreshold"] || 95) / 100);
+    getSellBidPrice(roundOffPrice(futBinPrice * ((enhancerSetting["idBarginThreshold"] || 95) / 100)));
   if (
     (binPrice && futBinPrice > binPrice) ||
     (markBidBargain && bidPrice && futBinPrice > bidPrice)
